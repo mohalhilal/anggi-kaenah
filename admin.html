@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Undangan Pernikahan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { background-color: #111827; color: #e5e7eb; }
+        .form-input { background-color: #374151; border-color: #4b5563; }
+        .btn { transition: background-color 0.2s; }
+        .btn-primary { background-color: #c29a46; color: #111827; }
+        .btn-primary:hover { background-color: #d4b06a; }
+        .btn-danger { background-color: #ef4444; }
+        .btn-danger:hover { background-color: #f87171; }
+    </style>
+</head>
+<body>
+
+    <div id="password-overlay" class="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center p-4">
+        <div class="bg-gray-800 p-8 rounded-lg shadow-xl w-full max-w-sm">
+            <h2 class="text-2xl font-bold text-center text-white mb-6">Admin Panel</h2>
+            <form id="password-form">
+                <input type="password" id="password-input" placeholder="Masukkan Kata Sandi" class="form-input w-full p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400">
+                <button type="submit" class="btn btn-primary w-full font-bold py-3 mt-4 rounded-md">Masuk</button>
+            </form>
+        </div>
+    </div>
+
+    <main id="main-content" class="container mx-auto p-4 md:p-8 hidden">
+        <h1 class="text-4xl font-bold mb-8 text-center text-amber-300">Panel Admin Undangan</h1>
+
+        <section class="bg-gray-800 p-6 rounded-lg shadow-lg mb-8">
+            <h2 class="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">🔗 Sebar Undangan</h2>
+            <p class="text-gray-400 mb-4">Ketik nama tamu untuk membuat tautan undangan yang dipersonalisasi.</p>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <input type="text" id="guest-name" placeholder="Nama Tamu Undangan" class="form-input flex-grow p-3 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-400">
+                <button id="generate-link-btn" class="btn btn-primary font-bold px-6 py-3 rounded-md">Buat Tautan</button>
+            </div>
+            <div id="link-result" class="mt-5 bg-gray-900 p-4 rounded-md hidden">
+                <p class="text-gray-300 mb-3 break-words" id="generated-url"></p>
+                <div class="flex gap-3">
+                    <button id="copy-link-btn" class="btn bg-gray-600 hover:bg-gray-500 text-white font-semibold py-2 px-4 rounded-md flex-grow text-sm"><i class="fas fa-copy mr-2"></i>Salin Tautan</button>
+                    <a id="whatsapp-share-btn" href="#" target="_blank" class="btn bg-green-600 hover:bg-green-500 text-white font-semibold py-2 px-4 rounded-md flex-grow text-sm text-center"><i class="fab fa-whatsapp mr-2"></i>Bagikan WA</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-gray-800 p-6 rounded-lg shadow-lg">
+            <h2 class="text-2xl font-semibold mb-4 border-b border-gray-700 pb-2">💬 Kelola Ucapan (Komentar)</h2>
+            <p id="comments-loading" class="text-center text-gray-400 py-4">Memuat ucapan...</p>
+            <div id="comments-list" class="space-y-4"></div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const ADMIN_PASSWORD = '123';
+            
+            const AIRTABLE_API_KEY = 'patVgbYlMPdyT8Y5Z.4195c707b6951534c05069569b6ff52e828abf18b011e5fc94eae8ca6cef3be5';
+            const AIRTABLE_BASE_ID = 'appwJhOFFBtzaE7PP';
+            const AIRTABLE_TABLE_NAME = 'ucapan'; 
+            
+            const passwordForm = document.getElementById('password-form');
+            const passwordOverlay = document.getElementById('password-overlay');
+            const mainContent = document.getElementById('main-content');
+            passwordForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const passwordInput = document.getElementById('password-input');
+                if (passwordInput.value === ADMIN_PASSWORD) {
+                    passwordOverlay.style.display = 'none';
+                    mainContent.classList.remove('hidden');
+                    fetchComments(); 
+                } else {
+                    alert('Kata sandi salah!');
+                }
+            });
+
+            const generateLinkBtn = document.getElementById('generate-link-btn');
+            const guestNameInput = document.getElementById('guest-name');
+            const linkResultDiv = document.getElementById('link-result');
+            const generatedUrlP = document.getElementById('generated-url');
+            const copyLinkBtn = document.getElementById('copy-link-btn');
+            const whatsappShareBtn = document.getElementById('whatsapp-share-btn');
+            generateLinkBtn.addEventListener('click', () => {
+                const guestName = guestNameInput.value.trim();
+                if (!guestName) return alert('Nama tamu tidak boleh kosong!');
+                const baseUrl = window.location.href.replace(/admin\.html.*$/, 'index.html');
+                const finalUrl = `${baseUrl}?to=${encodeURIComponent(guestName)}`;
+                generatedUrlP.textContent = finalUrl;
+                const waMessage = `_Assalamu'alaikum Wr. Wb._\n\nDengan memohon rahmat dan ridho Allah SWT, serta dengan segenap rasa bahagia, kami ingin membagikan kabar gembira ini.\n\nKami, *Anggi Pratama & Kaenah*, Insya Allah akan menyatukan dua hati dalam janji suci pernikahan yang akan diselenggarakan pada:\n\n🗓️ *Hari, Tanggal:* Minggu, 5 Oktober 2025\n📍 *Lokasi:* Cirebon\n\nMerupakan sebuah kebahagiaan tak terhingga bagi kami apabila Bapak/Ibu/Saudara/i *${guestName}* berkenan hadir untuk menjadi bagian dari hari istimewa kami dan memberikan doa restu.\n\nInformasi lengkap mengenai lokasi acara, galeri, dan kirim ucapan dapat diakses melalui tautan di bawah ini:\n${finalUrl}\n\nKehadiran Anda adalah kado terindah bagi kami. Atas perhatian dan doanya, kami ucapkan terima kasih yang tulus.\n\nHormat kami,\n*Anggi & Kaenah*`;
+                whatsappShareBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMessage)}`;
+                linkResultDiv.classList.remove('hidden');
+            });
+            copyLinkBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(generatedUrlP.textContent).then(() => {
+                    copyLinkBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Tersalin!';
+                    setTimeout(() => { copyLinkBtn.innerHTML = '<i class="fas fa-copy mr-2"></i>Salin Tautan'; }, 2000);
+                });
+            });
+
+            const commentsList = document.getElementById('comments-list');
+            const commentsLoading = document.getElementById('comments-loading');
+            async function fetchComments() {
+                commentsLoading.textContent = 'Memuat ucapan...';
+                commentsList.innerHTML = '';
+                const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+                try {
+                    const response = await fetch(url, { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } });
+                    if (!response.ok) throw new Error('Gagal mengambil data dari Airtable');
+                    const data = await response.json();
+                    commentsLoading.style.display = 'none';
+                    if (data.records.length === 0) {
+                        commentsList.innerHTML = '<p class="text-center text-gray-500">Belum ada ucapan yang masuk.</p>';
+                        return;
+                    }
+                    data.records.forEach(record => {
+                        const name = record.fields.nama || 'Anonim';
+                        const message = record.fields.ucapan || '-';
+                        const date = new Date(record.createdTime).toLocaleString('id-ID', { dateStyle: 'long', timeStyle: 'short' });
+                        const commentEl = document.createElement('div');
+                        commentEl.className = 'bg-gray-900 p-4 rounded-lg flex justify-between items-start gap-4';
+                        commentEl.innerHTML = `<div><p class="font-bold text-amber-300">${name}</p><p class="text-gray-300 mt-1">${message}</p><p class="text-xs text-gray-500 mt-2">${date}</p></div><button class="btn btn-danger text-white font-bold py-1 px-3 rounded text-sm delete-btn flex-shrink-0" data-id="${record.id}"><i class="fas fa-trash"></i></button>`;
+                        commentsList.appendChild(commentEl);
+                    });
+                } catch (error) { commentsLoading.textContent = `Error: ${error.message}`; }
+            }
+            async function deleteComment(recordId) {
+                if (!confirm('Anda yakin ingin menghapus ucapan ini secara permanen?')) return;
+                const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}/${recordId}`;
+                try {
+                    const response = await fetch(url, { method: 'DELETE', headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } });
+                    if (!response.ok) throw new Error('Gagal menghapus ucapan');
+                    fetchComments(); 
+                } catch (error) { alert(`Error: ${error.message}`); }
+            }
+            commentsList.addEventListener('click', (e) => {
+                const deleteButton = e.target.closest('.delete-btn');
+                if (deleteButton) {
+                    const recordId = deleteButton.dataset.id;
+                    deleteComment(recordId);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

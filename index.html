@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>The Wedding of Aris & Bella</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #141414; color: #fff; overflow-x: hidden; }
+        .font-script { font-family: 'Great Vibes', cursive; }
+        .hero-gradient-bottom { background-image: linear-gradient(to top, #141414 20%, rgba(20, 20, 20, 0) 100%); }
+        .event-card:hover { background-color: #2a2a2a; }
+        .fade-in-section { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in-section.visible { opacity: 1; transform: translateY(0); }
+        .comment-list-wrapper::-webkit-scrollbar { width: 6px; }
+        .comment-list-wrapper::-webkit-scrollbar-track { background: #1f1f1f; }
+        .comment-list-wrapper::-webkit-scrollbar-thumb { background-color: #555; border-radius: 20px; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .spinning { animation: spin 3s linear infinite; }
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <div id="opening-overlay" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center text-center p-4 transition-opacity duration-1000">
+        <p class="text-lg text-gray-300">The Wedding</p>
+        <h2 class="font-script text-6xl text-white drop-shadow-lg my-4">Anggi & Kaenah</h2>
+        <p class="text-gray-200">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+        <p id="guest-name-display" class="text-lg font-bold mt-2">Tamu Undangan</p>
+        <button id="open-invitation-btn" class="mt-8 bg-amber-500 text-black font-bold rounded-full py-3 px-6 hover:bg-amber-400 transition flex items-center">
+            <i class="fas fa-envelope-open mr-2"></i>
+            Buka Undangan
+        </button>
+    </div>
+
+    <main class="opacity-0 transition-opacity duration-1000">
+        <section class="relative h-[85vh] w-full mb-12">
+            <div class="absolute top-0 left-0 w-full h-full">
+                 <video autoplay loop muted playsinline poster="https://placehold.co/600x900/141414/FFFFFF?text=Memuat+Video..." class="w-full h-full object-cover">
+                     <source src="video111.mp4" type="video/mp4">
+                     Browser Anda tidak mendukung tag video.
+                 </video>
+            </div>
+            
+            <div class="absolute inset-0 hero-gradient-bottom"></div>
+
+            <div class="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-center text-center">
+                <p class="text-lg"></p>
+                <h2 class="font-script text-5xl md:text-6xl text-white drop-shadow-lg my-2">Anggi & Kaenah</h2>
+                <div class="flex items-center space-x-3 text-sm text-gray-300 mt-2">
+                    <span>Minggu</span>
+                    <span>•</span>
+                    <span class="font-semibold text-amber-300">5 Oktober 2025</span>
+                    <span>•</span>
+                    <span>Cirebon</span>
+                </div>
+                
+                <div class="mt-5 w-full max-w-xs flex flex-col items-center space-y-2">
+                    <a href="#jadwal" class="w-full flex items-center justify-center bg-white text-black font-bold rounded-md py-2.5 text-base hover:bg-gray-200 transition">
+                        <i class="fas fa-calendar-check mr-2"></i>
+                        Jadwal Acara
+                    </a>
+                    <a href="#hadiah" class="w-full flex items-center justify-center bg-zinc-700/80 text-white font-semibold rounded-md py-2.5 text-base hover:bg-zinc-600/80 transition backdrop-blur-sm">
+                        <i class="fas fa-gift mr-2"></i>
+                        Amplop Digital
+                    </a>
+                </div>
+
+                <p class="mt-4 text-sm leading-relaxed max-w-md">
+                    Dengan memohon rahmat dan ridho-Mu, ya Allah, kami bermaksud menyelenggarakan pernikahan kami. Merupakan suatu kehormatan bagi kami apabila Anda berkenan hadir.
+                </p>
+            </div>
+        </section>
+
+        <section class="px-4 pb-8 -mt-8">
+            <div class="fade-in-section" id="jadwal">
+                <h3 class="text-xl font-semibold mb-4">Jadwal Acara</h3>
+                
+                <div class="space-y-3">
+                    <div class="event-card flex items-center p-2 cursor-pointer transition duration-300 rounded-lg">
+                        <img src="akad.jpg" alt="Akad Nikah" class="rounded w-32 h-auto mr-4">
+                        <div class="flex-grow">
+                            <h4 class="font-semibold text-base">Akad Nikah</h4>
+                            <span class="text-xs text-gray-400">08:00 WIB - Selesai</span>
+                            <p class="text-xs text-gray-300 mt-1 line-clamp-4">Bertempat Blok. Silidut RT/RW 07/04, Kec. Plered, Kab. Cirebon</p>
+                        </div>
+                    </div>
+                    <div class="event-card flex items-center p-2 cursor-pointer transition duration-300 rounded-lg">
+                        <img src="resepsi.jpg" alt="Resepsi" class="rounded w-32 h-auto mr-4">
+                        <div class="flex-grow">
+                            <h4 class="font-semibold text-base">Resepsi Pernikahan</h4>
+                            <span class="text-xs text-gray-400">10.00 WIB - Selesai</span>
+                            <p class="text-xs text-gray-300 mt-1 line-clamp-4">Bertempat Blok. Silidut RT/RW 07/04, Kec. Plered, Kab. Cirebon</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 fade-in-section">
+                <h3 class="text-xl font-semibold mb-4">Kisah Lainnya</h3>
+                <div class="grid grid-cols-3 gap-2.5">
+                    <a href="1.png" class="gallery-item cursor-pointer"><img src="1.png" class="rounded-lg"></a>
+                    <a href="2.png" class="gallery-item cursor-pointer"><img src="2.png" class="rounded-lg"></a>
+                    <a href="3.png" class="gallery-item cursor-pointer"><img src="3.png" class="rounded-lg"></a>
+                    <a href="4.png" class="gallery-item cursor-pointer"><img src="4.png" class="rounded-lg"></a>
+                    <a href="5.png" class="gallery-item cursor-pointer"><img src="5.png" class="rounded-lg"></a>
+                    <a href="6.png" class="gallery-item cursor-pointer"><img src="6.png" class="rounded-lg"></a>
+                </div>
+            </div>
+
+            <div class="mt-10 fade-in-section">
+                <h3 class="text-xl font-semibold mb-4">Doa & Ucapan</h3>
+                
+                <form id="comment-form" class="mb-6">
+                    <div class="space-y-3">
+                        <input type="text" id="comment-name" placeholder="Nama Anda" class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" required>
+                        <textarea id="comment-message" placeholder="Tuliskan doa & ucapan Anda..." rows="3" class="w-full bg-zinc-800 border border-zinc-700 rounded-md p-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" required></textarea>
+                    </div>
+                    <button type="submit" id="submit-button" class="mt-3 w-full bg-amber-500 text-black font-bold rounded-md py-2.5 text-base hover:bg-amber-400 transition flex items-center justify-center">
+                        Kirim Ucapan
+                    </button>
+                </form>
+
+                <div id="comment-list-wrapper" class="comment-list-wrapper space-y-4 max-h-96 overflow-y-auto pr-2">
+                    <p id="loading-comments" class="text-center text-gray-400">Memuat ucapan...</p>
+                </div>
+            </div>
+            
+            <div id="hadiah" class="mt-10 fade-in-section">
+                <h3 class="text-xl font-semibold mb-4 text-center">Hadiah Pernikahan</h3>
+                <p class="text-center text-gray-400 text-sm mb-6 max-w-md mx-auto">
+                    Doa restu Anda merupakan karunia yang sangat berarti bagi kami. Namun jika memberi adalah ungkapan tanda kasih, Anda dapat memberi kado secara cashless.
+                </p>
+                
+                <div class="space-y-4 max-w-sm mx-auto">
+                    <div class="bg-zinc-800 p-5 rounded-lg text-center shadow-lg">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Bank_Mandiri_logo_2016.svg/2560px-Bank_Mandiri_logo_2016.svg.png" alt="Logo Bank Mandiri" class="mx-auto mb-4 h-6">
+                        <p class="font-semibold text-lg">Anggi Pratama</p>
+                        <p class="text-2xl font-mono tracking-wider my-2 text-amber-300" id="rekening-mandiri">1340027563344</p>
+                        <button data-rekening="rekening-mandiri" class="copy-btn w-full mt-3 bg-zinc-700 text-white font-bold rounded-md py-2 text-sm hover:bg-zinc-600 transition flex items-center justify-center">
+                            <i class="fas fa-copy mr-2"></i>Salin Rekening
+                        </button>
+                    </div>
+                    <div class="bg-zinc-800 p-5 rounded-lg text-center shadow-lg">
+                         <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Bank_Syariah_Indonesia.svg/1024px-Bank_Syariah_Indonesia.svg.png" alt="Logo Bank BSI" class="mx-auto mb-4 h-6">
+                        <p class="font-semibold text-lg">Kaenah</p>
+                        <p class="text-2xl font-mono tracking-wider my-2 text-amber-300" id="rekening-bsi">7302142682</p>
+                        <button data-rekening="rekening-bsi" class="copy-btn w-full mt-3 bg-zinc-700 text-white font-bold rounded-md py-2 text-sm hover:bg-zinc-600 transition flex items-center justify-center">
+                            <i class="fas fa-copy mr-2"></i>Salin Rekening
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 fade-in-section text-center px-4">
+                <p class="text-gray-300 text-sm leading-relaxed max-w-md mx-auto">
+                    Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak/Ibu/Saudara/i berkenan hadir untuk memberikan doa restu. Atas kehadiran dan doa restu, kami ucapkan terima kasih.
+                </p>
+                <p class="text-gray-200 mt-6">Hormat kami yang berbahagia,</p>
+                <h3 class="font-script text-5xl text-white my-6 drop-shadow-lg">Anggi & Kaenah</h3>
+                <div class="text-sm text-gray-400 mt-4">
+                    <p class="font-semibold">Keluarga Besar Bpk. [Nama Ayah Anggi] & Ibu. [Nama Ibu Anggi]</p>
+                    <p class="font-semibold mt-1">Keluarga Besar Bpk. [Nama Ayah Kaenah] & Ibu. [Nama Ibu Kaenah]</p>
+                </div>
+            </div>
+        </section>
+        <br><br><br>
+    </main>
+
+    <audio id="background-music" loop>
+        <source src="musik.m4a" type="audio/mpeg">
+        Browser Anda tidak mendukung elemen audio.
+    </audio>
+
+    <button id="music-control-btn" class="hidden fixed bottom-5 right-5 w-12 h-12 bg-black/50 backdrop-blur-sm rounded-full text-white z-40 flex items-center justify-center">
+        <i id="music-icon" class="fas fa-pause"></i>
+    </button>
+    
+    <div id="gallery-popup" class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4 transition-opacity duration-300">
+        <button id="close-popup-btn" class="absolute top-4 right-5 text-white text-4xl z-50 hover:text-gray-300">&times;</button>
+        <button id="prev-btn" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-2xl bg-black/40 p-3 rounded-full hover:bg-black/60 transition focus:outline-none">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button id="next-btn" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-2xl bg-black/40 p-3 rounded-full hover:bg-black/60 transition focus:outline-none">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="relative max-w-4xl max-h-[90vh]">
+            <img id="popup-image" src="" alt="Preview Gambar" class="w-full h-full object-contain rounded-lg">
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const openingOverlay = document.getElementById('opening-overlay');
+            const openInvitationBtn = document.getElementById('open-invitation-btn');
+            const mainContent = document.querySelector('main');
+            const musicControlBtn = document.getElementById('music-control-btn');
+            const musicIcon = document.getElementById('music-icon');
+            const audioPlayer = document.getElementById('background-music');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const guestName = urlParams.get('to');
+            if (guestName) {
+                document.getElementById('guest-name-display').textContent = guestName;
+                document.getElementById('comment-name').value = guestName;
+            }
+
+            openInvitationBtn.addEventListener('click', () => {
+                openingOverlay.style.opacity = '0';
+                setTimeout(() => { openingOverlay.style.display = 'none'; }, 1000);
+                document.body.classList.remove('overflow-hidden');
+                mainContent.style.opacity = '1';
+                audioPlayer.play().catch(error => console.log("Autoplay dicegah:", error));
+                musicControlBtn.classList.remove('hidden');
+            });
+            musicControlBtn.addEventListener('click', () => {
+                if (audioPlayer.paused) audioPlayer.play();
+                else audioPlayer.pause();
+            });
+            audioPlayer.addEventListener('play', () => {
+                musicIcon.classList.remove('fa-play'); musicIcon.classList.add('fa-pause');
+                musicControlBtn.classList.add('spinning');
+            });
+            audioPlayer.addEventListener('pause', () => {
+                musicIcon.classList.remove('fa-pause'); musicIcon.classList.add('fa-play');
+                musicControlBtn.classList.remove('spinning');
+            });
+
+            const AIRTABLE_API_KEY = 'patVgbYlMPdyT8Y5Z.4195c707b6951534c05069569b6ff52e828abf18b011e5fc94eae8ca6cef3be5';
+            const AIRTABLE_BASE_ID = 'appwJhOFFBtzaE7PP';
+            const AIRTABLE_TABLE_NAME = 'ucapan';
+
+            async function fetchAndDisplayComments() {
+                const commentListWrapper = document.getElementById('comment-list-wrapper');
+                const loadingElement = document.getElementById('loading-comments');
+                const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+
+                try {
+                    const response = await fetch(url, { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    const data = await response.json();
+                   
+                    commentListWrapper.innerHTML = '';
+
+                    if (data.records.length === 0) {
+                        commentListWrapper.innerHTML = '<p class="text-center text-gray-400">Jadilah yang pertama mengirim ucapan!</p>';
+                        return;
+                    }
+
+                    data.records.forEach(record => {
+                        const name = record.fields.nama || 'Anonim';
+                        const message = record.fields.ucapan || 'Semoga berbahagia!';
+                        
+                        const date = new Date(record.createdTime).toLocaleDateString('id-ID', {
+                            day: 'numeric',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'bg-zinc-800 p-4 rounded-lg';
+                        
+                        commentElement.innerHTML = `
+                            <div class="flex justify-between items-center mb-1">
+                                <p class="font-bold text-amber-300 text-sm">${name}</p>
+                                <p class="text-xs text-gray-500">${date}</p>
+                            </div>
+                            <p class="text-gray-300 text-sm">${message}</p>
+                        `;
+                        
+                        commentListWrapper.appendChild(commentElement);
+                    });
+                } catch (error) {
+                    console.error("Gagal mengambil ucapan:", error);
+    
+                }
+            }
+
+            async function handleFormSubmit(event) {
+                event.preventDefault();
+                const nameInput = document.getElementById('comment-name');
+                const messageInput = document.getElementById('comment-message');
+                const submitButton = document.getElementById('submit-button');
+                
+                const name = nameInput.value.trim();
+                const message = messageInput.value.trim();
+
+                if (!name || !message) return alert('Nama dan ucapan tidak boleh kosong!');
+
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Mengirim...';
+                
+                const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            "records": [{
+                                "fields": {
+                                    "nama": name,
+                                    "ucapan": message
+                                }
+                            }]
+                        })
+                    });
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    
+                    // Jangan hapus nama jika sudah terisi otomatis
+                    if (!urlParams.get('to')) {
+                        nameInput.value = '';
+                    }
+                    messageInput.value = '';
+                    fetchAndDisplayComments();
+                } catch (error) {
+                    console.error("Gagal mengirim ucapan:", error);
+                    alert('Maaf, terjadi kesalahan saat mengirim ucapan.');
+                } finally {
+                    submitButton.disabled = false;
+                    submitButton.innerHTML = 'Kirim Ucapan';
+                }
+            }
+            
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const rekeningId = button.dataset.rekening;
+                    const rekeningNumber = document.getElementById(rekeningId).textContent;
+                    navigator.clipboard.writeText(rekeningNumber).then(() => {
+                        const originalText = button.innerHTML;
+                        button.innerHTML = `<i class="fas fa-check mr-2"></i>Berhasil Disalin!`;
+                        button.disabled = true;
+                        setTimeout(() => {
+                            button.innerHTML = originalText;
+                            button.disabled = false;
+                        }, 2000);
+                    });
+                });
+            });
+            
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const popup = document.getElementById('gallery-popup');
+            const popupImage = document.getElementById('popup-image');
+            const closePopupBtn = document.getElementById('close-popup-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+
+            let currentImageIndex;
+            const imageUrls = Array.from(galleryItems).map(item => item.href);
+
+            function showImage(index) {
+                if (index < 0 || index >= imageUrls.length) return;
+                popupImage.src = imageUrls[index];
+                currentImageIndex = index;
+                popup.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closePopup() {
+                popup.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+
+            function showNextImage() {
+                showImage((currentImageIndex + 1) % imageUrls.length);
+            }
+
+            function showPrevImage() {
+                showImage((currentImageIndex - 1 + imageUrls.length) % imageUrls.length);
+            }
+            
+            galleryItems.forEach((item, index) => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showImage(index);
+                });
+            });
+
+            closePopupBtn.addEventListener('click', closePopup);
+            nextBtn.addEventListener('click', showNextImage);
+            prevBtn.addEventListener('click', showPrevImage);
+
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) closePopup();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!popup.classList.contains('hidden')) {
+                    if (e.key === 'ArrowRight') showNextImage();
+                    else if (e.key === 'ArrowLeft') showPrevImage();
+                    else if (e.key === 'Escape') closePopup();
+                }
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in-section').forEach(section => {
+                observer.observe(section);
+            });
+            
+            fetchAndDisplayComments();
+            document.getElementById('comment-form').addEventListener('submit', handleFormSubmit);
+        });
+    </script>
+</body>
+</html>
